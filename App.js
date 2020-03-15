@@ -9,7 +9,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Video } from 'expo-av';
 import * as firebase from 'firebase';
-import { ComponentExample } from './assets/elo.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyD7-Fa7AQ1spZQ7JDlvnWEUIBgwq5ExEds",
