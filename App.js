@@ -9,19 +9,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Video } from 'expo-av';
 import * as firebase from 'firebase';
+import { ComponentExample } from './assets/elo.js';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDD4IsozO6Oo3OPTmdsxhln5KYFvYBlsjY",
-    authDomain: "piatkafirst.firebaseapp.com",
-    databaseURL: "https://piatkafirst.firebaseio.com",
-    projectId: "piatkafirst",
-    storageBucket: "piatkafirst.appspot.com",
+    apiKey: "AIzaSyD7-Fa7AQ1spZQ7JDlvnWEUIBgwq5ExEds",
+    authDomain: "piatkatesty.firebaseapp.com",
+    databaseURL: "https://piatkatesty.firebaseio.com",
+    projectId: "piatkatesty",
+    storageBucket: "piatkatesty.appspot.com",
 };
 
 if (!firebase.apps.length) {
-    firebase.initializeApp({firebaseConfig});
+    console.log(firebaseConfig)
+    firebase.initializeApp(firebaseConfig);
 }
-
 
 
 const getFonts = () => Font.loadAsync({
