@@ -7,10 +7,17 @@ import {
     TouchableOpacity,
     Image,
     TextInput,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, ScrollView, BackHandler
 } from 'react-native';
 import {Video} from 'expo-av';
 import * as firebase from 'firebase';
+import Login from './screens/login';
+import EventList from './screens/eventList';
+import { NavigationContainer, StackActions, CommonActions  } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyD7-Fa7AQ1spZQ7JDlvnWEUIBgwq5ExEds",
@@ -25,137 +32,81 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
+const Tab = createMaterialBottomTabNavigator();
+const Stack = createStackNavigator();
 
-function NotificationsScreen() {
-    AsyncStorage.setItem('email', 'email');
-
-    return (
-        <View style={styles.loginScreenMainContainer}>
-            <Video
-                source={require("./assets/bg.mp4")}
-                rate={1.0}
-                isMuted={true}
-                resizeMode="cover"
-                shouldPlay
-                isLooping
-                style={styles.bgVid}
+export default function App(){
+    createHomeStackNavigator = () =>
+        <Stack.Navigator screenOptions={{
+                            headerShown: false
+        }} swipeEnabled='false'>
+            <Stack.Screen
+                name="Login"
+                component={Login}
             />
-            <Text>Test</Text>
+            <Stack.Screen
+                name="Home"
+                children={createHomeTabNavigator}
+            />
+        </Stack.Navigator>
 
-        </View>
+    createHomeTabNavigator = () =>
+        <Tab.Navigator
+                           activeColor="#3e2465"
+                           inactiveColor="#8366ae"
+                           barStyle={{ backgroundColor: '#f1eded' }}
+            >
+                <Tab.Screen name="Home"
+                            component={EventList}
+                            options={{
+                                tabBarLabel: 'Home',
+                                tabBarIcon: ({ color }) => (
+                                    <MaterialCommunityIcons name="map" color={color} size={26} />
+                                    ),
+                            }}
+                />
+                <Tab.Screen name="Login"
+                            component={Login}
+                            options={{
+                                tabBarLabel: 'Updates',
+                                tabBarIcon: ({ color }) => (
+                                    <MaterialCommunityIcons name="cup" color={color} size={26} />
+                                    ),
+                            }}
+                />
+                <Tab.Screen name="Logi1n"
+                            component={Login}
+                            options={{
+                                tabBarLabel: 'Profile',
+                                tabBarIcon: ({ color }) => (
+                                    <MaterialCommunityIcons name="account-box-outline" color={color} size={26} />
+                                    ),
+                            }}
+                />
+            </Tab.Navigator>
+    return(
+        <NavigationContainer>
+            {createHomeStackNavigator()}
+        </NavigationContainer>
     )
 }
 
-export default function NotificationsSceeen() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [check, setCheck] = useState('');
-    async function setData(){
-        await AsyncStorage.setItem('email', 'id1');
-        await AsyncStorage.setItem('password', 'id1');
-    };
 
-    async function retrieveData() {
-        await AsyncStorage.getItem("email").then((email) => {
-            setEmail(email)
-        });
-        await AsyncStorage.getItem("password").then((password) => {
-            setPassword(password)
-            if (password !== ''){
-                setCheck('1')
-            }
-        });
-    }
 
-    retrieveData();
 
-    function tryLogin(){
-        console.log(password);
-    };
-    useEffect(() => {
-
-        if(email != '1'){
-            tryLogin();
-        }
-    }, [check]);
+function NotificationsScreeen() {
 
     return (
-        <View style={styles.loginMainContainer}>
-            <KeyboardAvoidingView behavior={"padding"}
-                                  keyboardVerticalOffset={
-                                      Platform.select({
-                                          ios: () => 60,
-                                          android: () => 110
-                                      })()
-                                  }
-                                  style={styles.container}
-            >
-                <Image source={require('./assets/logo.png')} style={styles.logo}/>
-                <TextInput
-                    style={styles.inputText}
-                    placeholder={'Email'}
-                    textAlign={'center'}
-                    placeholderTextColor = "#f85b5b"
-                    textContentType='emailAddress'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    onChangeText={(password)=>setEmail({password})}
-                />
-                <TextInput
-                    style={styles.inputText}
-                    placeholder={'Hasło'}
-                    textAlign={'center'}
-                    placeholderTextColor = "#f85b5b"
-                    secureTextEntry={true}
-                    textContentType='password'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    onChangeText={(password)=>setPassword({password})}
-                />
-                <Text style={styles.error}>Podane hasło lub adres email jest nieprawidłowy.</Text>
-                <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.loginButtonText}>Zaloguj Się</Text>
-                </TouchableOpacity>
-            </KeyboardAvoidingView>
-        </View>
+        <Login/>
     )
 }
+
+
+
 
 
 
 
 const styles = StyleSheet.create({
-    loginMainContainer:{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent:'center',
-    },
-    logo:{
-        marginBottom: 72,
-    },
-    container:{
-        alignItems: 'center',
-    },
-    inputText:{
-        height: 41,
-        width: 256,
-        backgroundColor: '#f8e2e2ff',
-        borderRadius: 12,
-        marginBottom: 23,
-    },
-    error:{
-        color: '#f85b5b',
-    },
-    loginButton:{
-        marginTop: 30,
-        backgroundColor: '#f85b5b',
-        borderRadius: 12,
-        height: 44,
-        width: 162,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginButtonText:{
-        color: '#fff',
-    },
+
 });
