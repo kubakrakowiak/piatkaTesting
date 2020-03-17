@@ -114,7 +114,7 @@ export default function NotificationsSceeen() {
                 />
                 <Text style={styles.error}>Podane hasło lub adres email jest nieprawidłowy.</Text>
                 <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.loginButtonText}>Zaloguj Się</Text>
+                    <Text style={styles.loginButtonText}>Zaloguj Casd</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         </View>
