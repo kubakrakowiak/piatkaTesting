@@ -52,6 +52,7 @@ export default function NotificationsSceeen() {
     const [check, setCheck] = useState('');
     async function setData(){
         await AsyncStorage.setItem('email', 'id1');
+        await AsyncStorage.setItem('password', 'id1');
     };
 
     async function retrieveData() {
