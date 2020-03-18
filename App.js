@@ -13,6 +13,8 @@ import {Video} from 'expo-av';
 import * as firebase from 'firebase';
 import Login from './screens/login';
 import EventList from './screens/eventList';
+import Profile from './screens/profile';
+import Map from './screens/map';
 import { NavigationContainer, StackActions, CommonActions  } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -36,7 +38,8 @@ const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App(){
-    createHomeStackNavigator = () =>
+    createHomeStackNavigator = () => {
+        return(
         <Stack.Navigator screenOptions={{
                             headerShown: false
         }} swipeEnabled='false'>
@@ -49,6 +52,8 @@ export default function App(){
                 children={createHomeTabNavigator}
             />
         </Stack.Navigator>
+        )
+    }
 
     createHomeTabNavigator = () =>
         <Tab.Navigator
@@ -57,27 +62,27 @@ export default function App(){
                            barStyle={{ backgroundColor: '#f1eded' }}
             >
                 <Tab.Screen name="Home"
-                            component={EventList}
+                            component={Map}
                             options={{
-                                tabBarLabel: 'Home',
+                                tabBarLabel: '',
                                 tabBarIcon: ({ color }) => (
                                     <MaterialCommunityIcons name="map" color={color} size={26} />
                                     ),
                             }}
                 />
                 <Tab.Screen name="Login"
-                            component={Login}
+                            component={EventList}
                             options={{
-                                tabBarLabel: 'Updates',
+                                tabBarLabel: '',
                                 tabBarIcon: ({ color }) => (
                                     <MaterialCommunityIcons name="cup" color={color} size={26} />
                                     ),
                             }}
                 />
-                <Tab.Screen name="Logi1n"
-                            component={Login}
+                <Tab.Screen name="Profile"
+                            component={Profile}
                             options={{
-                                tabBarLabel: 'Profile',
+                                tabBarLabel: '',
                                 tabBarIcon: ({ color }) => (
                                     <MaterialCommunityIcons name="account-box-outline" color={color} size={26} />
                                     ),

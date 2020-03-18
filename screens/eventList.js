@@ -43,7 +43,7 @@ function EventList({ navigation: { navigate, dispatch } }) {
                     <View style={styles.eventListEventsContainer}>
                         <Image source={require('../assets/hpclogo.png')} style={styles.logoProperties}/>
                         <View style={styles.eventListEventInfoContainer}>
-                            <View style={styles.InformationsContent}>
+                            <View>
                                 <Text style={styles.textProp}>Połowinki II LO Gdańsk</Text>
                                 <Text style={styles.textProp}>Cena Biletu: od 30zł</Text>
                                 <Text style={styles.textProp}>Miejsce: Zdarta Płytwa 33.5 Gdańsk</Text>
@@ -59,7 +59,7 @@ function EventList({ navigation: { navigate, dispatch } }) {
                         <View style={styles.eventListEventsContainer}>
                             <Image source={require('../assets/hpclogo.png')} style={styles.logoProperties}/>
                             <View style={styles.eventListEventInfoContainer}>
-                                <View style={styles.InformationsContent}>
+                                <View>
                                     <Text style={styles.textProp}>Połowinki II LO Gdańsk</Text>
                                     <Text style={styles.textProp}>Cena Biletu: od 30zł</Text>
                                     <Text style={styles.textProp}>Miejsce: Zdarta Płytwa 33.5 Gdańsk</Text>
@@ -91,7 +91,7 @@ function EventList({ navigation: { navigate, dispatch } }) {
                         <View style={styles.eventListEventsContainer}>
                             <Image source={require('../assets/hpclogo.png')} style={styles.logoProperties}/>
                             <View style={styles.eventListEventInfoContainer}>
-                                <View style={styles.InformationsContent}>
+                                <View>
                                     <Text style={styles.textProp}>Połowinki II LO Gdańsk</Text>
                                     <Text style={styles.textProp}>Cena Biletu: od 30zł</Text>
                                     <Text style={styles.textProp}>Miejsce: Zdarta Płytwa 33.5 Gdańsk</Text>
