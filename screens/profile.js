@@ -6,20 +6,54 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    ActivityIndicator
 } from "react-native";
 import React from "react";
+import { AuthContext } from "../context";
 import { CommonActions  } from '@react-navigation/native';
-
+import * as firebase from "firebase";
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Setting a timer']);
 
 
 function Profile({ navigation: { navigate, dispatch } }) {
+    const { logout } = React.useContext(AuthContext);
+    const [isLoading, setIsLoading] = React.useState(true)
+    const [userLogin, setUserLogin] = React.useState(null)
+    let testy;
+    testy = () =>{
+        let user = firebase.auth().currentUser.uid
+        firebase.database()
+            .ref('/Users/'+user)
+            .once('value')
+            .then(snapshot => {
+                setUserLogin(snapshot.val().nick);
+                setIsLoading(false)
+            }).catch(() => {setIsLoading(false)});
+        
+    }
+    React.useEffect(() => {
+        testy()
+    },[]);
+
+
+    if (isLoading){
+        return (<ActivityIndicator/>)
+    }
     return (
         <View style={styles.container}>
             <Image source={require('../assets/icon2.png')} style={styles.logo}/>
             <View style={styles.profileContent}>
                 <View style={styles.textContent}>
-                <Text style={styles.textContentText}>Kacper</Text>
+                <Text style={styles.textContentText}>
+                    {userLogin ? (
+                        userLogin
+                        ):(
+                            'Brak usera'
+                    )
+                    }
+                </Text>
                 </View>
                 <View style={styles.textContent}>
                 <Text style={styles.textContentText}>23 styczeń 2000</Text>
@@ -31,6 +65,9 @@ function Profile({ navigation: { navigate, dispatch } }) {
 
                 <TouchableOpacity style={styles.textContent2}>
                     <Text style={styles.textContent2Text}>Polubione wydarzenia</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.textContent2} onPress={ () => logout()}>
+                    <Text style={styles.textContent2Text}>Wyloguj</Text>
                 </TouchableOpacity>
 
 

@@ -10,18 +10,23 @@ import {
     View,
     BackHandler
 } from "react-native";
+import { AuthContext } from "../context";
 import { StackActions } from '@react-navigation/native';
+import * as firebase from 'firebase';
 
 
 
 
-function LoginScreen({ navigation: { navigate } }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+function LoginScreen({navigation}) {
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
     const [check, setCheck] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const { signIn } = React.useContext(AuthContext);
     async function setData(){
-        await AsyncStorage.setItem('email', 'id1');
-        await AsyncStorage.setItem('password', 'id1');
+        await AsyncStorage.setItem('email', email);
+        await AsyncStorage.setItem('password', password);
     };
 
     async function retrieveData() {
@@ -30,7 +35,7 @@ function LoginScreen({ navigation: { navigate } }) {
         });
         await AsyncStorage.getItem("password").then((password) => {
             setPassword(password)
-            if (password !== '' || password != null){
+            if (password != null || password != null){
                 setCheck('1')
             }
         });
@@ -38,24 +43,6 @@ function LoginScreen({ navigation: { navigate } }) {
 
 
 
-
-
-
-
-
-    retrieveData();
-
-    function tryLogin(){
-        console.log(password);
-    };
-
-
-    useEffect(() => {
-
-        if(email != '1'){
-            tryLogin();
-        }
-    }, [check]);
 
     return (
         <View style={styles.loginMainContainer}>
@@ -77,7 +64,7 @@ function LoginScreen({ navigation: { navigate } }) {
                     textContentType='emailAddress'
                     autoCapitalize='none'
                     autoCorrect={false}
-                    onChangeText={(password)=>setEmail({password})}
+                    onChangeText={(email)=>setEmail({email})}
                 />
                 <TextInput
                     style={styles.inputText}
@@ -91,8 +78,11 @@ function LoginScreen({ navigation: { navigate } }) {
                     onChangeText={(password)=>setPassword({password})}
                 />
                 <Text style={styles.error}>Podane hasło lub adres email jest nieprawidłowy.</Text>
-                <TouchableOpacity style={styles.loginButton} onPress={() => navigate('Home')}>
+                <TouchableOpacity style={styles.loginButton} onPress={() => signIn({email, password})}>
                     <Text style={styles.loginButtonText}>Zaloguj Się</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.loginButton} onPress={() => navigation.push('Register')}>
+                    <Text style={styles.loginButtonText}>Zarejestruj się</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         </View>
